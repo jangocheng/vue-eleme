@@ -111,7 +111,7 @@ export default {
             // total_fee 支付金额(分)
             // out_trade_no 前端端订单编号
             if (this.isWeiXin()) {
-                this.openid = localStorage.getItem('openid');
+                this.openid = sessionStorage.getItem('openid');
                 this.$axios
                     .post('/api/order/wx_api_pay', {
                         out_trade_no: mobile + time,
