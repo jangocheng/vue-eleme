@@ -2,7 +2,7 @@
     <div v-if="showSearch" class="addressSearch">
         <div class="search-view">
             <!-- 地图 -->
-            <div id="container"></div>
+            <div id="map"></div>
             <!-- 搜索框 -->
             <div class="search-box">
                 <div class="search-box-input">
@@ -20,7 +20,7 @@
                     @click="selectAddress(item)"
                 >
                     <p class="search-row-title">{{ item.name }}</p>
-                    <p class="search-row-location">{{ item.district }}{{ item.address }}</p>
+                    <p class="search-row-location">{{ item.district ? item.district : ''}}{{ item.address }}</p>
                 </li>
             </ul>
         </div>
@@ -38,7 +38,7 @@ export default {
         };
     },
     mounted() {
-        this.showMap();
+        this.initMap();
     },
     computed: {
         city() {
@@ -71,28 +71,45 @@ export default {
                 autoComplete.search(val, (status, result) => {
                     // 搜索成功时，result即是对应的匹配数据
                     // console.log(result);
+                    if (!result.tips) return;
+                    for (let i = 0; i < result.tips.length; i ++) {
+                        if(result.tips[i].location != '') {
+                            this.initMap(result.tips[i].location)
+                            break;
+                        }
+                    }
                     this.areaList = result.tips;
                 });
             });
         },
         selectAddress(item) {
             // console.log(item);
-            this.addressInfo.address = item.name + item.district + item.address;
+            this.addressInfo.address = item.name + (item.district ? item.district : '') + item.address;
             this.$emit('close');
         },
-        showMap() {
-            var layer = new AMap.TileLayer({
-                zooms: [3, 20], // 可见级别
-                visible: true, // 是否可见
-                opacity: 1, // 透明度
-                zIndex: 0 // 叠加层级
+        initMap(pos = this.$store.getters.location.position) {
+            let _this = this;
+            AMapUI.loadUI(['misc/PositionPicker'], function(PositionPicker) {
+                var map = new AMap.Map('map',{
+                    zoom:16
+                })
+                var positionPicker = new PositionPicker({
+                    mode:'dragMap',//设定为拖拽地图模式，可选'dragMap'、'dragMarker'，默认为'dragMap'
+                    map:map//依赖地图对象
+                });
+                //TODO:事件绑定、结果处理等
+
+                positionPicker.on('success', function(positionResult) {
+                    // console.log(positionResult);
+                    _this.areaList = positionResult.regeocode.pois;
+                });
+                positionPicker.on('fail', function(positionResult) {
+                    // 海上或海外无法获得地址信息
+                });
+
+                positionPicker.start(pos);
             });
-            this.map = new AMap.Map('container', {
-                layers: [layer], // 当只想显示标准图层时layers属性可缺省
-                zoom: 15
-            });
-            console.log(this.map);
-            // c.LE.zoom
+
         }
     }
 };
@@ -110,11 +127,9 @@ export default {
     padding-top: 45px;
 }
 /* 地图 */
-#container {
-    position: sticky;
-    top: -40%;
-    width: 100%;
-    height: 70%;
+#map {
+    width: 100vw;
+    height: 60vw;
 }
 /* 搜索框 */
 .search-view {
