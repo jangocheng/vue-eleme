@@ -1,54 +1,60 @@
 <template>
-    <div class="shop" v-if="shopInfo">
-        <!-- 头部 -->
-        <nav class="header-nav">
-            <div class="nav_bg">
-                <img :src="shopInfo.rst.scheme" alt />
-            </div>
-            <div class="nav_back">
-                <i @click="$router.push('/home')" class="fa fa-chevron-left"></i>
-            </div>
-            <div class="shop_image">
-                <img :src="shopInfo.rst.image_path" alt />
-            </div>
-        </nav>
+    <section>
+        <div class="shop" v-if="shopInfo">
+            <!-- 头部 -->
+            <nav class="header-nav">
+                <div class="nav_bg">
+                    <img :src="shopInfo.rst.scheme" alt />
+                </div>
+                <div class="nav_back">
+                    <i @click="$router.push('/home')" class="fa fa-chevron-left"></i>
+                </div>
+                <div class="shop_image">
+                    <img :src="shopInfo.rst.image_path" alt />
+                </div>
+            </nav>
 
-        <!-- 商家信息 -->
-        <div class="index-rst">
-            <div class="rst-name">
-                <span @click="showInfoModel = true">
-                    {{
-                    shopInfo.rst.name
-                    }}
-                </span>
-                <i class="fa fa-caret-right"></i>
-            </div>
-            <!-- 弹窗信息 -->
-            <InfoModel
-                @close="showInfoModel = false"
-                :rst="shopInfo.rst"
-                :showInfoModel="showInfoModel"
-            />
+            <!-- 商家信息 -->
+            <div class="index-rst">
+                <div class="rst-name">
+                    <span @click="showInfoModel = true">
+                        {{
+                        shopInfo.rst.name
+                        }}
+                    </span>
+                    <i class="fa fa-caret-right"></i>
+                </div>
+                <!-- 弹窗信息 -->
+                <InfoModel
+                    @close="showInfoModel = false"
+                    :rst="shopInfo.rst"
+                    :showInfoModel="showInfoModel"
+                />
 
-            <!-- 评分月售 -->
-            <div class="rst-order">
-                <span>评分{{ shopInfo.rst.rating }}</span>
-                <span>月售{{ shopInfo.rst.recent_order_num }}单</span>
-                <span>蜂鸟专送约{{ shopInfo.rst.order_lead_time }}分钟</span>
-            </div>
-            <!-- 优惠信息 -->
-            <Activity :activities="shopInfo.rst.activities" />
+                <!-- 评分月售 -->
+                <div class="rst-order">
+                    <span>评分{{ shopInfo.rst.rating }}</span>
+                    <span>月售{{ shopInfo.rst.recent_order_num }}单</span>
+                    <span>蜂鸟专送约{{ shopInfo.rst.order_lead_time }}分钟</span>
+                </div>
+                <!-- 优惠信息 -->
+                <Activity :activities="shopInfo.rst.activities" />
 
-            <!-- 公告 -->
-            <p class="rst-promotion">公告: {{ shopInfo.rst.promotion_info }}</p>
+                <!-- 公告 -->
+                <p class="rst-promotion">公告: {{ shopInfo.rst.promotion_info }}</p>
+            </div>
+
+            <!-- 导航 -->
+            <NavBar />
+            <keep-alive>
+                <router-view></router-view>
+            </keep-alive>
         </div>
-
-        <!-- 导航 -->
-        <NavBar />
-        <keep-alive>
-            <router-view></router-view>
-        </keep-alive>
-    </div>
+        <!-- 加载完成前显示预览图 -->
+        <div v-else class="shell-skeleton">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNzUgNjAzIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yKSI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTIgNjloMzc1djUzNEgyeiIvPjxwYXRoIGZpbGw9IiNFRUUiIGQ9Ik0yIDBoMzc1djY5SDJ6Ii8+PHJlY3Qgd2lkdGg9IjY2IiBoZWlnaHQ9IjY2IiB4PSIxNTciIHk9IjIzIiBmaWxsPSIjRjZGNkY2IiByeD0iMiIvPjxwYXRoIGZpbGw9IiNFRUUiIGQ9Ik02NSA5OWgyNTB2MjRINjV6bTAgMzFoMjUwdjEzSDY1eiIvPjxwYXRoIGZpbGw9IiNGNkY2RjYiIGQ9Ik02NSAxNTBoMjUwdjEzSDY1ek0yIDMwMGg3N3YzMDNIMnoiLz48cGF0aCBzdHJva2U9IiNGNkY2RjYiIGQ9Ik0yNi41IDE3Mi41aDMyNnYyOGgtMzI2eiIvPjxwYXRoIGZpbGw9IiNFRUUiIGQ9Ik01MCAxODBoMjgwdjEzSDUweiIvPjxwYXRoIHN0cm9rZT0iI0Y2RjZGNiIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgZD0iTS41IDI0OC41aDM3OS4wMDUiLz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4OCAyNzgpIj48cGF0aCBmaWxsPSIjRUVFIiBkPSJNMjY3IDgydi0zLjk5OGEuOTk5Ljk5OSAwIDEgMC0yIDBWODJoLTMuOTk4YS45OTkuOTk5IDAgMSAwIDAgMkgyNjV2My45OThhLjk5OS45OTkgMCAxIDAgMiAwVjg0aDMuOTk4YS45OTkuOTk5IDAgMSAwIDAtMkgyNjd6bS0xIDEyYy02LjA3NSAwLTExLTQuOTI1LTExLTExczQuOTI1LTExIDExLTExIDExIDQuOTI1IDExIDExLTQuOTI1IDExLTExIDExeiIvPjxyZWN0IHdpZHRoPSI3NCIgaGVpZ2h0PSI3NCIgeD0iMSIgeT0iMTMiIGZpbGw9IiNGNkY2RjYiIHJ4PSIyIi8+PHBhdGggZmlsbD0iI0VFRSIgZD0iTTg3IDEzaDE0MHYxNkg4N3ptMCAyNWgxMjZ2MTFIODd6bTAgMzFoMzN2MThIODd6Ii8+PHBhdGggc3Ryb2tlPSIjRjZGNkY2IiBzdHJva2UtbGluZWNhcD0ic3F1YXJlIiBkPSJNLjQ3MyAxLjVoMjkzLjAzMiIvPjwvZz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4OCAzOTMpIj48cGF0aCBmaWxsPSIjRUVFIiBkPSJNMjY3IDgydi0zLjk5OGEuOTk5Ljk5OSAwIDEgMC0yIDBWODJoLTMuOTk4YS45OTkuOTk5IDAgMSAwIDAgMkgyNjV2My45OThhLjk5OS45OTkgMCAxIDAgMiAwVjg0aDMuOTk4YS45OTkuOTk5IDAgMSAwIDAtMkgyNjd6bS0xIDEyYy02LjA3NSAwLTExLTQuOTI1LTExLTExczQuOTI1LTExIDExLTExIDExIDQuOTI1IDExIDExLTQuOTI1IDExLTExIDExeiIvPjxyZWN0IHdpZHRoPSI3NCIgaGVpZ2h0PSI3NCIgeD0iMSIgeT0iMTMiIGZpbGw9IiNGNkY2RjYiIHJ4PSIyIi8+PHBhdGggZmlsbD0iI0VFRSIgZD0iTTg3IDEzaDE0MHYxNkg4N3ptMCAyNWgxMjZ2MTFIODd6bTAgMzFoMzN2MThIODd6Ii8+PHBhdGggc3Ryb2tlPSIjRjZGNkY2IiBzdHJva2UtbGluZWNhcD0ic3F1YXJlIiBkPSJNLjQ3MyAxLjVoMjkzLjAzMiIvPjwvZz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg4OCA1MDkpIj48cGF0aCBmaWxsPSIjRUVFIiBkPSJNMjY3IDgydi0zLjk5OGEuOTk5Ljk5OSAwIDEgMC0yIDBWODJoLTMuOTk4YS45OTkuOTk5IDAgMSAwIDAgMkgyNjV2My45OThhLjk5OS45OTkgMCAxIDAgMiAwVjg0aDMuOTk4YS45OTkuOTk5IDAgMSAwIDAtMkgyNjd6bS0xIDEyYy02LjA3NSAwLTExLTQuOTI1LTExLTExczQuOTI1LTExIDExLTExIDExIDQuOTI1IDExIDExLTQuOTI1IDExLTExIDExeiIvPjxyZWN0IHdpZHRoPSI3NCIgaGVpZ2h0PSI3NCIgeD0iMSIgeT0iMTMiIGZpbGw9IiNGNkY2RjYiIHJ4PSIyIi8+PHBhdGggZmlsbD0iI0VFRSIgZD0iTTg3IDEzaDE0MHYxNkg4N3ptMCAyNWgxMjZ2MTFIODd6bTAgMzFoMzN2MThIODd6Ii8+PHBhdGggc3Ryb2tlPSIjRjZGNkY2IiBzdHJva2UtbGluZWNhcD0ic3F1YXJlIiBkPSJNLjQ3MyAxLjVoMjkzLjAzMiIvPjwvZz48cGF0aCBmaWxsPSIjRUVFIiBkPSJNNTAgMjIyaDI5djE2SDUwem0zOSAzNWgyOXYxNkg4OXpNOSAyNjdoNTB2MTVIOXptMCA1NGg1MHYxNUg5em0wIDQ5aDUwdjE1SDl6bTAgMTAxaDUwdjE1SDl6bTAtNDloNTB2MTVIOXptMCAxMDFoNTB2MTVIOXptMCA1MGg1MHYxNUg5em0xNjYtMzUxaDI5djE2aC0yOXptMTI2IDBoMjl2MTZoLTI5eiIvPjxwYXRoIGZpbGw9IiNGNUY1RjUiIGQ9Ik0yIDU1NmgzNzV2NDdIMnoiLz48L2c+PC9zdmc+" alt="">
+        </div>
+    </section>
 </template>
 
 <script>
@@ -208,5 +214,10 @@ export default {
     margin: 2.267vw auto 2.67vw;
     padding: 0;
     white-space: nowrap;
+}
+/* 预览 */
+.shell-skeleton img {
+    width: 100vw;
+    height: 100vh;
 }
 </style>
