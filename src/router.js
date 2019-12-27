@@ -137,7 +137,6 @@ router.beforeEach((to, from, next) => {
         if (enterFlag) next('/home');
         else next();
     } else {
-        // enterFlag ?  next() : next('/welcome');
         if (enterFlag) {
             const isLogin = !!localStorage.ele_login;
             if (to.path == '/login') {

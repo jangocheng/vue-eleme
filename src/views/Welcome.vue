@@ -27,10 +27,19 @@ export default {
             this.timer = setInterval(() => {
                 this.second--;
                 if (this.second == 0) {
-                    this.$router.push('/home');
+                    if(this.isWeiXin()) {
+                        const url = 'https://payjx.cn/api/openid?mchid=1568951701&callback_url=http://woyou.cool/home';
+                        window.location.href = url + '?timestamp=' + ((new Date()).getTime() + Math.random());
+                    } else {
+                        this.$router.push('/home');
+                    }
                     clearInterval(this.timer);
                 }
             }, 1000);
+        },
+        isWeiXin() {
+            var ua = window.navigator.userAgent.toLowerCase();
+            return ua.match(/MicroMessenger/i) == 'micromessenger';
         }
     }
 };

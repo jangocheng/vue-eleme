@@ -121,9 +121,10 @@ export default {
         this.getData();
     },
     mounted() {
-        document
-            .getElementsByClassName('home')[0]
-            .addEventListener('scroll', this.getScrollTop);
+        document.getElementsByClassName('home')[0].addEventListener('scroll', this.getScrollTop);
+        /openid=(.{0,28})[^&]*/.test(window.location.href);
+        let openid = RegExp.$1;
+        localStorage.setItem('openid', openid);
     },
     methods: {
         getScrollTop() {

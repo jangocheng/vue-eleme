@@ -59,7 +59,7 @@
             <button @click="handlePay">去支付</button>
         </footer>
         <!-- 兼容苹果 -->
-        <a id="alink" href="https://payjx.cn/api/openid?mchid=1568951701&callback_url=http://woyou.cool/pay" style="visibility: hidden;"></a>
+        <!-- <a id="alink" href="https://payjx.cn/api/openid?mchid=1568951701&callback_url=http://woyou.cool/pay" style="visibility: hidden;"></a> -->
     </div>
 </template>
 
@@ -135,23 +135,7 @@ export default {
                 });
                 return;
             }
-            if (this.isWeiXin()) {
-                const u = navigator.userAgent; const app = navigator.appVersion;
-                // 安卓||苹果
-                if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {
-                    const url = 'https://payjx.cn/api/openid?mchid=1568951701&callback_url=http://woyou.cool/pay';
-                    window.location.href = url + '?timestamp=' + ((new Date()).getTime() + Math.random());
-                } else {
-                    // (!!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/))
-                    document.getElementById('alink').click();
-                }
-            } else {
-                this.$router.push('/pay');
-            }
-        },
-        isWeiXin() {
-            var ua = window.navigator.userAgent.toLowerCase();
-            return ua.match(/MicroMessenger/i) == 'micromessenger';
+            this.$router.push('/pay');
         }
     },
     components: {
