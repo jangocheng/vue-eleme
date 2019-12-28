@@ -1,83 +1,88 @@
 <template>
-    <div class="comment" v-if="evaluation">
-        <!-- 商家评分 -->
-        <section class="rating-wrap">
-            <div class="rating-info">
-                <h4>{{ evaluation.rating.shop_score.toFixed(1) }}</h4>
-                <div class="shop-score">
-                    <span>商家评分</span>
-                    <Rating :rating="evaluation.rating.shop_score" />
-                </div>
-            </div>
-            <div class="other-score">
-                <div class="tp-score">
-                    <div>
-                        <span>味道</span>
-                        <p>{{ evaluation.rating.taste_score.toFixed(1) }}</p>
-                    </div>
-                    <div>
-                        <span>包装</span>
-                        <p>{{ evaluation.rating.package_score.toFixed(1) }}</p>
+    <section>
+        <div class="comment" v-if="evaluation">
+            <!-- 商家评分 -->
+            <section class="rating-wrap">
+                <div class="rating-info">
+                    <h4>{{ evaluation.rating.shop_score.toFixed(1) }}</h4>
+                    <div class="shop-score">
+                        <span>商家评分</span>
+                        <Rating :rating="evaluation.rating.shop_score" />
                     </div>
                 </div>
-                <div class="rider-score">
-                    <span>配送</span>
-                    <p>{{ evaluation.rating.rider_score.toFixed(1) }}</p>
-                </div>
-            </div>
-        </section>
-        <!-- 评论区 -->
-        <div class="shop-info">
-            <!-- 标签 -->
-            <ul class="tags">
-                <li
-                    :class="{ unsatisfied: item.unsatisfied }"
-                    v-for="(item, index) in evaluation.tags"
-                    :key="index"
-                >
-                    {{ item.name }}
-                    <span v-if="item.count > 0">{{ item.count }}</span>
-                </li>
-            </ul>
-            <!-- 内容 -->
-            <ul class="comments-wrap">
-                <li v-for="(item, index) in evaluation.comments" :key="index">
-                    <div class="comment-user">
-                        <img v-if="item.avatar" :src="item.avatar" />
-                        <div
-                            class="noheadImg"
-                            v-else
-                            :style="{
-                                'background-position': `0px ${(index % 5) *
-                                    30}px`
-                            }"
-                        ></div>
-                    </div>
-                    <div class="comments-info">
-                        <div class="comment-name">
-                            <h4>{{ item.username }}</h4>
-                            <small>{{ item.rated_at }}</small>
+                <div class="other-score">
+                    <div class="tp-score">
+                        <div>
+                            <span>味道</span>
+                            <p>{{ evaluation.rating.taste_score.toFixed(1) }}</p>
                         </div>
-                        <div class="comment-rating">
-                            <Rating :rating="item.rating" />
-                            <span
+                        <div>
+                            <span>包装</span>
+                            <p>{{ evaluation.rating.package_score.toFixed(1) }}</p>
+                        </div>
+                    </div>
+                    <div class="rider-score">
+                        <span>配送</span>
+                        <p>{{ evaluation.rating.rider_score.toFixed(1) }}</p>
+                    </div>
+                </div>
+            </section>
+            <!-- 评论区 -->
+            <div class="shop-info">
+                <!-- 标签 -->
+                <ul class="tags">
+                    <li
+                        :class="{ unsatisfied: item.unsatisfied }"
+                        v-for="(item, index) in evaluation.tags"
+                        :key="index"
+                    >
+                        {{ item.name }}
+                        <span v-if="item.count > 0">{{ item.count }}</span>
+                    </li>
+                </ul>
+                <!-- 内容 -->
+                <ul class="comments-wrap">
+                    <li v-for="(item, index) in evaluation.comments" :key="index">
+                        <div class="comment-user">
+                            <img v-if="item.avatar" :src="item.avatar" />
+                            <div
+                                class="noheadImg"
+                                v-else
                                 :style="{
-                                    color: ratingcontent(item.rating).color
+                                    'background-position': `0px ${(index % 5) *
+                                        30}px`
                                 }"
-                            >{{ ratingcontent(item.rating).txt }}</span>
+                            ></div>
                         </div>
-                        <div class="comment-text">{{ item.comment_text }}</div>
-                        <div class="comment-reply">{{ item.reply.content }}</div>
-                        <ul class="comment-imgs">
-                            <li v-for="(img, i) in item.order_images" :key="i">
-                                <img :src="img.image_hash" alt />
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
+                        <div class="comments-info">
+                            <div class="comment-name">
+                                <h4>{{ item.username }}</h4>
+                                <small>{{ item.rated_at }}</small>
+                            </div>
+                            <div class="comment-rating">
+                                <Rating :rating="item.rating" />
+                                <span
+                                    :style="{
+                                        color: ratingcontent(item.rating).color
+                                    }"
+                                >{{ ratingcontent(item.rating).txt }}</span>
+                            </div>
+                            <div class="comment-text">{{ item.comment_text }}</div>
+                            <div class="comment-reply">{{ item.reply.content }}</div>
+                            <ul class="comment-imgs">
+                                <li v-for="(img, i) in item.order_images" :key="i">
+                                    <img :src="img.image_hash" alt />
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
+        <div v-else class="no-comments">
+            <span>暂无评价</span>
+        </div>
+    </section>
 </template>
 
 <script>
@@ -94,7 +99,7 @@ export default {
     },
     methods: {
         getData() {
-            this.$axios('/api/profile/comments').then(res => {
+            this.$axios(`/api/profile/comments/${this.$store.getters.CBShop.rst.authentic_id}`).then(res => {
                 // console.log(res.data);
                 this.evaluation = res.data;
             });
@@ -291,5 +296,10 @@ export default {
 .comment-imgs > li img {
     width: 40vw;
     height: 40vw;
+}
+.no-comments {
+    font-size: 0.15rem;
+    color: #666;
+    margin: 3vw;
 }
 </style>

@@ -14,7 +14,7 @@
                             </p>
                         </div>
                         <div class="recommend-food-price">
-                            <p>¥{{ item.lowest_price || item.activity.fixed_price }}</p>
+                            <p>¥{{ item.lowest_price }}</p>
                             <CartControll :food="item" />
                         </div>
                     </li>
@@ -65,7 +65,7 @@
                                     月售{{ food.month_sales }}份 好评率{{ food.satisfy_rate }}
                                 </p>
                                 <div class="fooddetails-price">
-                                    <span class="price">¥{{ food.lowest_price || food.activity.fixed_price }}</span>
+                                    <span class="price">¥{{ food.lowest_price }}</span>
                                     <CartControll :food="food" />
                                 </div>
                             </section>

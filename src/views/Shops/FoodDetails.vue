@@ -18,7 +18,7 @@
                         <span>好评率 {{ food.satisfy_rate }}%</span>
                     </div>
                     <div class="foodpanel-priceLine">
-                        <span>¥{{ food.lowest_price || food.activity.fixed_price }}</span>
+                        <span>¥{{ food.lowest_price }}</span>
                         <CartControll class="cart-btn" :food="food" />
                     </div>
                     <p>{{ food.description }}</p>

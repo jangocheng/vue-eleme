@@ -26,7 +26,7 @@
                                     <span>{{ food.name }}</span>
                                 </h4>
                                 <span class="entityList-entitytotal">
-                                    {{ food.lowest_price || food.activity.fixed_price }}
+                                    {{ food.lowest_price }}
                                 </span>
                                 <CartControll :food="food" />
                             </li>
@@ -130,13 +130,7 @@ export default {
                     if (item.count) {
                         empty = false;
                         this.totalCount += item.count;
-                        if (item.lowest_price) {
-                            this.totalPrice +=
-                                item.lowest_price * item.count;
-                        } else {
-                            this.totalPrice +=
-                                item.activity.fixed_price * item.count;
-                        }
+                        this.totalPrice += item.lowest_price * item.count;
                         this.selectFoods.push(item);
                     }
                 });
@@ -147,13 +141,7 @@ export default {
                     if (food.count) {
                         empty = false;
                         this.totalCount += food.count;
-                        if (food.lowest_price) {
-                            this.totalPrice +=
-                                food.lowest_price * food.count;
-                        } else {
-                            this.totalPrice +=
-                                food.activity.fixed_price * food.count;
-                        }
+                        this.totalPrice += food.lowest_price * food.count;
                         this.selectFoods.push(food);
                     }
                 });

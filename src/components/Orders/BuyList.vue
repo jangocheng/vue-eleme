@@ -7,7 +7,7 @@
                 <div class="cart-group-info">
                     <span>{{food.name}}</span>
                     <span>x{{food.count}}</span>
-                    <span>{{food.lowest_price || food.activity.fixed_price}}</span>
+                    <span>{{ food.lowest_price }}</span>
                 </div>
             </li>
             <li class="cart-group-total">
