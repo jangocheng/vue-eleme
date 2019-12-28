@@ -69,8 +69,7 @@
                 <IndexShop
                     v-for="(item, index) in restaurants"
                     :key="index"
-                    :restaurant="item.restaurant"
-                    :authentic_id="item.restaurant.authentic_id"
+                    :restaurant="item"
                 ></IndexShop>
             </div>
         </mt-loadmore>
@@ -186,7 +185,7 @@ export default {
                     this.sortRule
                 )
                 .then(res => {
-                    // console.log(res.data)
+                    console.log(res.data)
                     this.$refs.loadmore.onTopLoaded();
                     this.restaurants = res.data;
                 });

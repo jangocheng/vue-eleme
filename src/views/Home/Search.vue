@@ -21,7 +21,7 @@
             <div v-else>
                 <SearchIndex
                     :data="result.restaurants"
-                    @click="$router.push({name: 'shop', query: {authentic_id: restaurants.authentic_id}})"
+                    @push="pushShop"
                 ></SearchIndex>
                 <SearchIndex :data="result.words" @click="shopItemClick"></SearchIndex>
             </div>
@@ -72,7 +72,7 @@
                 <IndexShop
                     v-for="(item, index) in restaurants"
                     :key="index"
-                    :restaurant="item.restaurant"
+                    :restaurant="item"
                 ></IndexShop>
             </div>
         </div>
@@ -148,7 +148,7 @@ export default {
             }
             this.$axios(`/api/profile/typeahead/${this.key_word}`)
                 .then(res => {
-                    // console.log(res.data);
+                    console.log(res.data);
                     this.result = res.data;
                 })
                 .catch(err => {
@@ -183,14 +183,8 @@ export default {
             this.$axios
                 .post(`/api/profile/restaurants/${this.page}/${this.size}`)
                 .then(res => {
-                    // console.log('加载数量' + res.data.length);
-                    // if(this.page === 1){
-                    //     this.restaurants = res.data;
-                    // }
                     if (res.data.length > 0) {
-                        res.data.forEach(item => {
-                            this.restaurants.push(item);
-                        });
+                        this.restaurants = res.data;
                     }
                     if (res.data.length < 8) {
                         this.loading = true;
@@ -218,6 +212,10 @@ export default {
         clearSearchHistory() {
             this.searchHistory = [];
             localStorage.removeItem('SEARCH_HISTORY');
+        },
+        pushShop(id) {
+            console.log(id)
+            this.$router.push({name: 'shop', query: {authentic_id: id}})
         }
     }
 };
@@ -232,6 +230,7 @@ export default {
     background: #fff;
 }
 .search_header {
+    background: #fff;
     position: sticky;
     top: 44px;
     margin-top: 45px;
