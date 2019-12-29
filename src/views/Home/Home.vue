@@ -185,7 +185,7 @@ export default {
                     this.sortRule
                 )
                 .then(res => {
-                    console.log(res.data)
+                    // console.log(res.data)
                     this.$refs.loadmore.onTopLoaded();
                     this.restaurants = res.data;
                 });
