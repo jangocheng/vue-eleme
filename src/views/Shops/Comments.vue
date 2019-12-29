@@ -43,15 +43,10 @@
                 <!-- 内容 -->
                 <ul class="comments-wrap">
                     <li v-for="(item, index) in evaluation.comments" :key="index">
+                        <!-- 头像 -->
                         <div class="comment-user">
                             <img v-if="item.avatar" :src="item.avatar" />
-                            <div
-                                class="noheadImg"
-                                v-else
-                                :style="{
-                                    'background-position': `0px ${(index % 5) *
-                                        30}px`
-                                }"
+                            <div class="noheadImg" v-else :style="{ 'background-position': `0px ${(index % 5) * 30}px` }"
                             ></div>
                         </div>
                         <div class="comments-info">
@@ -67,8 +62,8 @@
                                     }"
                                 >{{ ratingcontent(item.rating).txt }}</span>
                             </div>
-                            <div class="comment-text">{{ item.comment_text }}</div>
-                            <div class="comment-reply">{{ item.reply.content }}</div>
+                            <div class="comment-text">{{ item.rating_text }}</div>
+                            <div v-if="item.reply" class="comment-reply">{{ item.reply.content }}</div>
                             <ul class="comment-imgs">
                                 <li v-for="(img, i) in item.order_images" :key="i">
                                     <img :src="img.image_hash" alt />
