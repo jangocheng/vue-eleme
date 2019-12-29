@@ -340,7 +340,7 @@ export default {
     width: 18vw;
     float: left;
     position: relative;
-    margin-top: 2.9vw;
+    margin: 2.9vw 0;
 }
 .foodentry .img_wrap {
     position: relative;
@@ -368,6 +368,7 @@ export default {
     display: block;
     color: #666;
     font-size: 0.1rem;
+    padding-top: 2vw;
 }
 /* 推荐商家 */
 .shoplist-title {
