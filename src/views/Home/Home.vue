@@ -15,11 +15,7 @@
             </div>
         </div>
         <!-- 搜索商家 -->
-        <div
-            class="search_wrap"
-            :class="{ fixedview: showFilter }"
-            @click="$router.push('/search')"
-        >
+        <div class="search_wrap" :class="{ fixedview: showFilter }" @click="$router.push('/search')" >
             <div class="shop_search">
                 <i class="fa fa-search"></i>
                 星巴克专星送
@@ -27,10 +23,10 @@
         </div>
         <!-- 图超级连接 -->
         <div class="container">
+            <!-- 轮播图 -->
             <div style="position:relative">
                 <!-- 弧线 -->
                 <div class="pure_top"></div>
-                <!-- 轮播图 -->
                 <mt-swipe :auto="4000" class="swiper">
                     <mt-swipe-item v-for="(img, index) in swipeImgs" :key="index">
                         <img :src="img" alt />
@@ -38,19 +34,25 @@
                 </mt-swipe>
             </div>
             <!-- 分类图 -->
-            <mt-swipe :auto="0" class="entries">
-                <mt-swipe-item v-for="(entry, i) in entries" :key="i" class="entry_wrap">
-                    <div class="foodentry" v-for="(item, index) in entry" :key="index">
-                        <div class="img_wrap">
-                            <img :src="item.image" alt />
-                        </div>
-                        <span>{{ item.name }}</span>
+            <div class="entries">
+                <!-- 第一排大图标 -->
+                <div class="foodentry" v-for="(item, index) in entries" :key="index">
+                    <div class="img_wrap">
+                        <img :src="item.image" alt />
                     </div>
-                </mt-swipe-item>
-            </mt-swipe>
+                    <span>{{ item.name }}</span>
+                </div>
+                <!-- 二三小图标 -->
+                <div class="classify" v-for="(cla, j) in classify" :key="entries.length + j">
+                    <div class="img_wrap">
+                        <img :src="cla.image" />
+                    </div>
+                    <span>{{ cla.name }}</span>
+                </div>
+            </div>
         </div>
         <!-- 推荐商家 -->
-        <div class="shoplist-title">推荐商家</div>
+        <div class="shoplist-title">推荐</div>
         <!-- 筛选导航 -->
         <div class="filterSticky" :class="{ cFixedview: showFilter }">
             <FilterView :filterData="filterData" @searchFixed="showFilterView" @updata="updata"></FilterView>
@@ -91,6 +93,7 @@ export default {
         return {
             swipeImgs: [],
             entries: [],
+            classify: [],
             filterData: null,
             showFilter: false,
             page: 1,
@@ -149,6 +152,7 @@ export default {
                     // console.log(res.data);
                     this.swipeImgs = res.data.swipeImgs;
                     this.entries = res.data.entries;
+                    this.classify = res.data.classify;
                 })
                 .catch(err => {
                     console.log(err);
@@ -324,13 +328,16 @@ export default {
     border-radius: 5px;
 }
 .entries {
+    width: 90vw;
     background: #fff;
-    height: 47.2vw;
     text-align: center;
     overflow: hidden;
+    margin: 0 auto;
+    padding-bottom: 3vw;
 }
-.foodentry {
-    width: 20%;
+.foodentry,
+.classify {
+    width: 18vw;
     float: left;
     position: relative;
     margin-top: 2.9vw;
@@ -341,6 +348,12 @@ export default {
     width: 12vw;
     height: 12vw;
 }
+.classify .img_wrap {
+    position: relative;
+    display: inline-block;
+    width: 7vw;
+    height: 7vw;
+}
 .img_wrap img {
     width: 100%;
     height: 100%;
@@ -348,34 +361,21 @@ export default {
 .foodentry span {
     display: block;
     color: #666;
+    padding-top: 1.6vw;
     font-size: 0.13rem;
 }
-
+.classify span {
+    display: block;
+    color: #666;
+    font-size: 0.1rem;
+}
 /* 推荐商家 */
 .shoplist-title {
-    display: flex;
-    align-items: flex;
-    justify-content: center;
     height: 9.6vw;
     line-height: 9.6vw;
-    font-size: 0.16rem;
     font-weight: 600;
     color: #333;
-    background: #fff;
-}
-.shoplist-title:after,
-.shoplist-title:before {
-    display: block;
-    content: "一";
-    width: 5.3vw;
-    height: 0.27vw;
-    color: #999;
-}
-.shoplist-title:before {
-    margin-right: 3.5vw;
-}
-.shoplist-title:after {
-    margin-left: 3.5vw;
+    padding-left: 3vw;
 }
 .filterSticky {
     position: sticky;
