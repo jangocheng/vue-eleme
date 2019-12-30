@@ -22,7 +22,7 @@
             </div>
         </div>
         <!-- 图超级连接 -->
-        <div class="container">
+        <div class="container" @click="$showMsg('暂未开放')">
             <!-- 轮播图 -->
             <div style="position:relative">
                 <!-- 弧线 -->
@@ -52,7 +52,7 @@
             </div>
         </div>
         <!-- 红包 -->
-        <div class="redpack">
+        <div class="redpack" @click="$showMsg('暂未开放')">
             <div class="vip">
                 <div class="vip-des">
                     <h2>超级会员</h2>
