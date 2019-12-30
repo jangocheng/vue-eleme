@@ -7,7 +7,7 @@ import MintUI from 'mint-ui';
 import 'mint-ui/lib/style.css';
 import showMsg from './plugin/showMsg'
 import api from './api/index'
-// import './utils/vconsoleUtil.js'
+// import './plugin/vconsoleUtil.js'
 
 
 Vue.config.productionTip = false;

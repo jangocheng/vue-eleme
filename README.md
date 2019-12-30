@@ -34,8 +34,8 @@ step4： 结算(价钱0.1折+添加与选择地址)
         进度：/----------/ 100%
 
 step5:  收货地址系统(高德地图选择地址)
-        模拟配送(ArcGIS API for JavaScript || Mapnik)
         红包(领取+使用)
+        模拟配送(ArcGIS API for JavaScript || Mapnik)
         进度：/-_________/ 010%
 ```
 ## Project setup

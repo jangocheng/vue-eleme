@@ -51,6 +51,29 @@
                 </div>
             </div>
         </div>
+        <!-- 红包 -->
+        <div class="redpack">
+            <div class="vip">
+                <div class="vip-des">
+                    <h2>超级会员</h2>
+                    <strong>1.5</strong>
+                    <span>个奖励金可用</span>
+                </div>
+                <div class="vip-img">
+                    <i class="fa fa-diamond"></i>
+                </div>
+            </div>
+            <div class="subsidy">
+                <div class="subsidy-des">
+                    <h2>优惠津贴</h2>
+                    <strong>20元</strong>
+                    <span>专属补贴</span>
+                </div>
+                <div class="subsidy-img">
+                    <i class="fa fa-credit-card"></i>
+                </div>
+            </div>
+        </div>
         <!-- 推荐商家 -->
         <div class="shoplist-title">推荐</div>
         <!-- 筛选导航 -->
@@ -106,7 +129,11 @@ export default {
             mintScroll: false,
             elOffsetTop: 0,
             homeScrollTop: 0,
-            gotoTop: false
+            gotoTop: false,
+            redpack: [
+                { title: '超级会员', number: '1.5', des: '个奖励金可用', icon: ''},
+                { title: '津贴优惠', number: '20元', des: '专属补贴', icon: ''}
+            ]
         };
     },
     computed: {
@@ -365,6 +392,62 @@ export default {
     color: #666;
     font-size: 0.1rem;
     padding-top: 2vw;
+}
+/* 红包 */
+.redpack {
+    display: flex;
+    justify-content: space-between;
+}
+.redpack .vip,
+.redpack .subsidy{
+    display: flex;
+    justify-content: space-between;
+    width: 44.6667vw;
+    height: 20vw;
+    border-radius: 5px;
+}
+.redpack .vip {
+    margin-left: 4.3vw;
+    background-image: linear-gradient(to right, #fdf4e2, #fbeccd);
+}
+.vip-des h2 {
+    font-size: 0.18rem;
+    color: #624732;
+    margin: 1.887vw;
+    font-weight: 600;
+}
+.vip-des strong,
+.subsidy-des strong {
+    color: #f15139;
+    line-height: 12.6667vw;
+    margin-left: 1.887vw;
+    font-weight: 600;
+}
+.vip-des span {
+    font-size: 0.13rem;
+    color: #9d876f;
+}
+.subsidy-des span {
+    font-size: 0.13rem;
+    color: #ab9192;
+}
+.subsidy-des h2 {
+    font-size: 0.18rem;
+    color: #7d383b;
+    margin: 1.887vw;
+    font-weight: 600;
+}
+.redpack .vip .vip-img {
+    margin: 12vw 3vw 0 0;
+    color: #dfab55;
+}
+.redpack .subsidy .subsidy-img {
+    margin: 12vw 3vw 0 0;
+    color: #ff6867;
+}
+.redpack .subsidy {
+    margin-right: 4.3vw;
+    background-image: linear-gradient(to right, #fdeee9, #fde9e8);
 }
 /* 推荐商家 */
 .shoplist-title {
