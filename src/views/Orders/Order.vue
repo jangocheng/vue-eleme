@@ -28,6 +28,9 @@
                 </div>
             </div>
             <div class="order-card-bottom">
+                <button class="cardbutton gray" @click="$router.push({ name: 'addComment', params: order})">
+                    <span>评价</span>
+                </button>
                 <button class="cardbutton" @click="deleteOrder(order)">
                     <span>删除订单</span>
                 </button>
@@ -191,6 +194,10 @@ export default {
     font-size: 0.128rem;
     color: #2395ff;
     margin-left: 2vw;
+}
+.cardbutton.gray {
+    border: 1px solid #ccc;
+    color: #000;
 }
 .order .no_order p {
     text-align: center;

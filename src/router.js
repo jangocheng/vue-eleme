@@ -127,6 +127,11 @@ const router = new Router({
             path: '/welcome',
             name: 'welcome',
             component: () => import('./views/Welcome.vue')
+        },
+        {
+            path: '/addComment',
+            name: 'addComment',
+            component: () => import('./views/Orders/AddComment.vue')
         }
     ]
 });
