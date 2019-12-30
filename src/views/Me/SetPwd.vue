@@ -31,7 +31,6 @@
 <script>
 import Header from '../../components/Basal/Header';
 import InputGroup from '../../components/Basal/InputGroup';
-import { Toast } from 'mint-ui';
 
 export default {
     name: 'SetPwd',
@@ -78,11 +77,7 @@ export default {
         toChange() {
             const user_id = this.$store.getters.userInfo._id;
             if (this.$store.getters.userInfo.password == this.code_2) {
-                Toast({
-                    message: '与原密码相同',
-                    iconClass: 'fa fa-times',
-                    position: 'middle'
-                });
+                this.$showMsg('与原密码相同', 'middle', 2000, 'fa fa-times');
                 return;
             }
             this.$axios
@@ -90,13 +85,8 @@ export default {
                     password: this.code_2
                 })
                 .then(res => {
-                    console.log(res.data);
-                    Toast({
-                        message: '操作成功',
-                        iconClass: 'fa fa-check',
-                        position: 'middle',
-                        duration: 2000
-                    });
+                    // console.log(res.data);
+                    this.$showMsg('操作成功', 'middle', 2000, 'fa fa-check');
                     // vuex更新个人信息
                     this.$store.dispatch('setUserInfo', res.data.user);
                     setTimeout(() => {
@@ -104,11 +94,7 @@ export default {
                     }, 1000);
                 })
                 .catch(err => {
-                    Toast({
-                        message: '操作失败',
-                        iconClass: 'fa fa-times',
-                        position: 'middle'
-                    });
+                    this.$showMsg('操作失败', 'middle', 2000, 'fa fa-times');
                     console.log(err);
                 });
         }

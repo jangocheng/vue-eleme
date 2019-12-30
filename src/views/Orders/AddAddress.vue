@@ -52,7 +52,7 @@ import Header from '../../components/Basal/Header';
 import FormBlock from '../../components/Orders/FormBlock';
 import TabTag from '../../components/Orders/TabTag';
 import AddressSearch from '../../components/Orders/AddressSearch';
-import { Toast } from 'mint-ui';
+
 export default {
     name: 'AddAddress',
     data() {
@@ -81,31 +81,31 @@ export default {
             this.addressInfo.sex = item;
         },
         handleSave() {
-            console.log(this.addressInfo);
+            // console.log(this.addressInfo);
             if (!this.addressInfo.name) {
-                this.showMsg('请输入联系人');
+                this.$showMsg('请输入联系人');
                 return;
             }
             if (!this.addressInfo.sex) {
-                this.showMsg('请选择性别');
+                this.$showMsg('请选择性别');
                 return;
             }
 
             if (!this.addressInfo.phone) {
-                this.showMsg('请输入手机号');
+                this.$showMsg('请输入手机号');
                 return;
             }
 
             if (!this.addressInfo.address) {
-                this.showMsg('请输入收货地址');
+                this.$showMsg('请输入收货地址');
                 return;
             }
             if (!this.addressInfo.bottom) {
-                this.showMsg('请输入门牌号');
+                this.$showMsg('请输入门牌号');
                 return;
             }
             if (!this.addressInfo.tag) {
-                this.showMsg('请选择标签');
+                this.$showMsg('请选择标签');
                 return;
             }
             // 存储数据
@@ -114,13 +114,6 @@ export default {
             } else {
                 this.editAddress();
             }
-        },
-        showMsg(msg) {
-            Toast({
-                message: msg,
-                position: 'bottom',
-                duration: 2000
-            });
         },
         addAddress() {
             console.log(this.addressInfo);

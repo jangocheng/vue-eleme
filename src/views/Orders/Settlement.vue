@@ -58,8 +58,6 @@
             <span>￥{{(orderInfo.totalPrice / 100).toFixed(2)}}</span>
             <button @click="handlePay">去支付</button>
         </footer>
-        <!-- 兼容苹果 -->
-        <!-- <a id="alink" href="https://payjx.cn/api/openid?mchid=1568951701&callback_url=http://woyou.cool/pay" style="visibility: hidden;"></a> -->
     </div>
 </template>
 
@@ -69,7 +67,6 @@ import Delivery from '../../components/Orders/Delivery';
 import BuyList from '../../components/Orders/BuyList';
 import RemarkItem from '../../components/Orders/RemarkItem';
 import Tableware from '../../components/Orders/Tableware';
-import { Toast } from 'mint-ui';
 
 export default {
     name: 'Settlement',
@@ -128,11 +125,7 @@ export default {
         },
         handlePay() {
             if (!this.nowAddrInfo) {
-                Toast({
-                    message: '请选择收货地址',
-                    position: 'bottom',
-                    duration: 1000
-                });
+                this.$showMsg('请选择收货地址', 'bottom', 1000);
                 return;
             }
             this.$router.push('/pay');

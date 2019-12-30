@@ -38,7 +38,6 @@
 
 <script>
 import Header from '../../components/Basal/Header';
-import { Toast } from 'mint-ui';
 
 export default {
     name: 'PersonalInfo',
@@ -49,11 +48,7 @@ export default {
     },
     created() {
         this.userInfo = this.$store.getters.userInfo;
-        Toast({
-            message: '当前页面暂时仅开放修改密码',
-            position: 'middle',
-            duration: 3000
-        });
+        this.$showMsg('当前页面暂时仅开放修改密码', 'middle', 3000);
     },
     methods: {
         handleLogout() {

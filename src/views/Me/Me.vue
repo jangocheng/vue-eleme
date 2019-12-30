@@ -44,8 +44,6 @@
 </template>
 
 <script>
-import { Toast } from 'mint-ui';
-
 export default {
     name: 'Me',
     data() {
@@ -93,11 +91,7 @@ export default {
                     this.myAddress();
                     break;
                 default:
-                    Toast({
-                        message: '暂未开放',
-                        position: 'middle',
-                        duration: 1000
-                    });
+                    this.$showMsg('暂未开放', 'middle', 1000)
                     break;
             }
         },

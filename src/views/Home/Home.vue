@@ -97,7 +97,7 @@ export default {
             filterData: null,
             showFilter: false,
             page: 1,
-            size: 7,
+            size: 5,
             restaurants: [],
             allLoaded: false,
             bottomPullText: '上拉加载更多',
