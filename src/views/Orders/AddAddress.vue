@@ -116,12 +116,8 @@ export default {
             }
         },
         addAddress() {
-            console.log(this.addressInfo);
-            this.$axios
-                .post(
-                    `/api/user/add_address/${localStorage.ele_login}`,
-                    this.addressInfo
-                )
+            // console.log(this.addressInfo);
+            this.$api.addAddress(localStorage.ele_login, this.addressInfo)
                 .then(res => {
                     // console.log(this.addressInfo);
                     if (!this.$store.getters.nowAddrInfo) {
@@ -129,18 +125,12 @@ export default {
                             'setNowAddrInfo',
                             this.addressInfo
                         );
-                        // console.log('add' + '---' + 'setNowAddrInfo')
                     }
                     this.$router.push('myAddress');
-                })
-                .catch(err => console.log(err));
+                }).catch(err => console.log(err));
         },
         editAddress() {
-            this.$axios
-                .post(
-                    `/api/user/edit_address/${localStorage.ele_login}/${this.addressInfo._id}`,
-                    this.addressInfo
-                )
+            this.$api.handleEdieAddress(localStorage.ele_login, this.addressInfo._id, this.addressInfo)
                 .then(res => {
                     this.$router.push('/myAddress');
                 });

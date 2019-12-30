@@ -55,12 +55,11 @@ export default {
             });
         },
         getData() {
-            this.$axios(`/api/user/user_info/${localStorage.ele_login}`).then(
-                res => {
+            this.$api.getUserInfo(localStorage.ele_login)
+                .then(res => {
                     // console.log(res.data);
                     this.allAddress = res.data.myAddress;
-                }
-            );
+                });
         },
         handleEdit(address) {
             this.$router.push({
@@ -72,10 +71,7 @@ export default {
             });
         },
         handleDelete(address, index) {
-            this.$axios
-                .delete(
-                    `/api/user/address/${localStorage.ele_login}/${address._id}`
-                )
+            this.$api.deleteAddress(localStorage.ele_login, address._id)
                 .then(res => {
                     this.allAddress.splice(index, 1);
                 });

@@ -88,10 +88,7 @@ export default {
                 this.$router.push('/goods');
                 return;
             }
-            this.$axios(
-                `/api/profile/batch_shop/${this.authentic_id ||
-                    this.$store.getters.CBShop.rst.authentic_id}`
-            )
+            this.$api.getFoodList(this.authentic_id || this.$store.getters.CBShop.rst.authentic_id)
                 .then(res => {
                     // console.log(res.data);
                     res.data.recommend.forEach(recommend => {

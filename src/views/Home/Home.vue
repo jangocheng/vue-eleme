@@ -86,6 +86,7 @@
 import { Swip, SwipItem, Loadmore } from 'mint-ui';
 import FilterView from '../../components/Shops/FilterView';
 import IndexShop from '../../components/Shops/IndexShop';
+// import api from '../../api/index'
 
 export default {
     name: 'Home',
@@ -146,8 +147,8 @@ export default {
             }
         },
         getData() {
-            // 轮播图 分类图
-            this.$axios('/api/profile/shopping')
+            // 轮播图和分类图
+            this.$api.getFrontPageImgs()
                 .then(res => {
                     // console.log(res.data);
                     this.swipeImgs = res.data.swipeImgs;
@@ -158,7 +159,7 @@ export default {
                     console.log(err);
                 });
             // 推荐过滤
-            this.$axios('/api/profile/filter')
+            this.$api.getfilterData()
                 .then(res => {
                     // console.log(res.data);
                     this.filterData = res.data;
@@ -182,12 +183,8 @@ export default {
             this.page = 1;
             this.allLoaded = false;
             this.bottomPullText = '上拉加载更多';
-            // 商家信息
-            this.$axios
-                .post(
-                    `/api/profile/restaurants/${this.page}/${this.size}`,
-                    this.sortRule
-                )
+            // 一些商家信息
+            this.$api.getRestaurants(this.page, this.size, this.sortRule)
                 .then(res => {
                     // console.log(res.data)
                     this.$refs.loadmore.onTopLoaded();
@@ -198,8 +195,7 @@ export default {
         loadMore() {
             if (!this.allLoaded) {
                 this.page++;
-                this.$axios
-                    .post(`/api/profile/restaurants/${this.page}/${this.size}`)
+                this.$api.getRestaurants(this.page, this.size)
                     .then(res => {
                         this.$refs.loadmore.onBottomLoaded();
                         if (res.data.length > 0) {

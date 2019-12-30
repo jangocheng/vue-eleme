@@ -94,10 +94,11 @@ export default {
     },
     methods: {
         getData() {
-            this.$axios(`/api/profile/comments/${this.$store.getters.CBShop.rst.authentic_id}`).then(res => {
-                // console.log(res.data);
-                this.evaluation = res.data;
-            });
+            this.$api.getComments(this.$store.getters.CBShop.rst.authentic_id)
+                .then(res => {
+                    // console.log(res.data);
+                    this.evaluation = res.data;
+                });
         },
         ratingcontent(rating) {
             const content = [

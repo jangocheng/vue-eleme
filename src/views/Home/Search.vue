@@ -111,7 +111,7 @@ export default {
         IndexShop
     },
     created() {
-        this.$axios('/api/profile/filter')
+        this.$api.getfilterData()
             .then(res => {
                 this.filterData = res.data;
             })
@@ -123,7 +123,7 @@ export default {
                 .getItem('SEARCH_HISTORY')
                 .split(',');
         }
-        this.$axios('/api/profile/hotwords')
+        this.$api.getHotwords()
             .then(res => {
                 this.searchHot = res.data.hot_words;
                 // console.log(res.data);
@@ -146,9 +146,9 @@ export default {
                 this.result = null;
                 return;
             }
-            this.$axios(`/api/profile/typeahead/${this.key_word}`)
+            this.$api.getDesiredRst(this.key_word)
                 .then(res => {
-                    console.log(res.data);
+                    // console.log(res.data);
                     this.result = res.data;
                 })
                 .catch(err => {
@@ -180,8 +180,7 @@ export default {
         },
         loadMore() {
             this.page++;
-            this.$axios
-                .post(`/api/profile/restaurants/${this.page}/${this.size}`)
+            this.$api.getRestaurants(this.page, this.size)
                 .then(res => {
                     if (res.data.length > 0) {
                         this.restaurants = res.data;

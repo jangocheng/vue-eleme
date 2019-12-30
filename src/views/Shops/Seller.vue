@@ -26,10 +26,11 @@ export default {
     },
     methods: {
         getData() {
-            this.$axios('/api/profile/seller').then(res => {
-                // console.log(res.data);
-                this.sellerInfo = res.data;
-            });
+            this.$api.getSellerSynopsis()
+                .then(res => {
+                    // console.log(res.data);
+                    this.sellerInfo = res.data;
+                });
         }
     }
 };

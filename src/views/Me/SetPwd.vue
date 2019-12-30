@@ -80,10 +80,7 @@ export default {
                 this.$showMsg('与原密码相同', 'middle', 2000, 'fa fa-times');
                 return;
             }
-            this.$axios
-                .post(`/api/user/change_pwd/${user_id}`, {
-                    password: this.code_2
-                })
+            this.$api.changePwd(user_id, this.code_2)
                 .then(res => {
                     // console.log(res.data);
                     this.$showMsg('操作成功', 'middle', 2000, 'fa fa-check');

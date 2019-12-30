@@ -80,22 +80,23 @@ export default {
     },
     methods: {
         getCityInfo() {
-            this.$axios('/api/city').then(res => {
-                delete res.data.__v;
-                delete res.data._id;
-                this.cityInfo = res.data;
-                this.keys = Object.keys(res.data);
-                // 去除hotcities
-                this.keys.pop();
-                this.keys.sort();
-                this.keys.forEach(key => {
-                    this.cityInfo[key].forEach(oneCity => {
-                        this.cityList.push(oneCity);
+            this.$api.getCities()
+                .then(res => {
+                    delete res.data.__v;
+                    delete res.data._id;
+                    this.cityInfo = res.data;
+                    this.keys = Object.keys(res.data);
+                    // 去除hotcities
+                    this.keys.pop();
+                    this.keys.sort();
+                    this.keys.forEach(key => {
+                        this.cityInfo[key].forEach(oneCity => {
+                            this.cityList.push(oneCity);
+                        });
                     });
-                });
-                this.$nextTick(() => {
-                    this.$refs.allcity.initScroll();
-                });
+                    this.$nextTick(() => {
+                        this.$refs.allcity.initScroll();
+                    });
             });
         },
         selectCity(city) {

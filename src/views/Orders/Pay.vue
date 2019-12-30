@@ -68,8 +68,8 @@ export default {
         });
     },
     created() {
-        const user_id = localStorage.ele_login;
-        this.$axios(`/api/user/user_info/${user_id}`).then(res => {
+        this.$api.getUserInfo(localStorage.ele_login)
+        .then(res => {
             this.$store.dispatch('setUserInfo', res.data);
             this.userInfo = res.data;
         });
@@ -106,18 +106,12 @@ export default {
         },
         pay() {
             const price = parseInt(this.orderInfo.totalPrice);
-            const time = new Date().getTime();
-            const mobile = this.$store.getters.userInfo.mobile;
+            const out_trade_no = this.$store.getters.userInfo.mobile + new Date().getTime();
             // total_fee 支付金额(分)
             // out_trade_no 前端端订单编号
             if (this.isWeiXin()) {
                 this.openid = sessionStorage.getItem('openid');
-                this.$axios
-                    .post('/api/order/wx_api_pay', {
-                        out_trade_no: mobile + time,
-                        total_fee: price,
-                        openid: this.openid
-                    })
+                this.$api.handlePayByJSAPI(out_trade_no, price, this.openid)
                     .then(res => {
                         // console.log(res.data);
                         this.nodeOrderId = res.data.payjs_order_id;
@@ -132,11 +126,7 @@ export default {
                         console.log(err);
                     });
             } else {
-                this.$axios
-                    .post('/api/order/wx_qecode_pay', {
-                        out_trade_no: mobile + time,
-                        total_fee: price
-                    })
+                this.$api.handlePayByQRCode(out_trade_no, price)
                     .then(res => {
                         // console.log(res);
                         this.nodeOrderId = res.data.payjs_order_id;
@@ -153,18 +143,17 @@ export default {
             }
         },
         cancelPay() {
-            this.$axios(`/api/order/close_order/${this.nodeOrderId}`).then(
-                res => {
-                    // console.log(res.data);
-                    if (res.data.return_code == 1) {
-                        this.addOrder();
+            this.$api.cancelPayment(this.nodeOrderId)
+                .then(res => {
+                        // console.log(res.data);
+                        if (res.data.return_code == 1) {
+                            this.addOrder();
+                        }
                     }
-                }
-            );
+                );
         },
-        checkPayStatus(orderID) {
-            this.$axios
-                .post(`/api/order/pay_status/${orderID}`)
+        checkPayStatus(orderId) {
+            this.$api.queryPayStatus(orderId)
                 .then(res => {
                     // console.log(res.data);
                     if (res.data.code == 1) {
@@ -187,11 +176,7 @@ export default {
                 nowAddrInfo: this.nowAddrInfo,
                 isSuccess: this.isSuccess
             };
-            this.$axios
-                .post(
-                    `/api/order/add_order/${localStorage.ele_login}`,
-                    orderlist
-                )
+            this.$api.addOrder(localStorage.ele_login, orderlist)
                 .then(res => {
                     // console.log(res.data);
                     // 清理vuex

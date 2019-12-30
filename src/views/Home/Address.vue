@@ -104,12 +104,11 @@ export default {
             this.$router.push('/home');
         },
         getData() {
-            this.$axios(`/api/user/user_info/${localStorage.ele_login}`).then(
-                res => {
+            this.$api.getUserInfo(localStorage.ele_login)
+                .then(res => {
                     // console.log(res.data);
                     this.allAddress = res.data.myAddress;
-                }
-            );
+                });
         }
     },
     components: {

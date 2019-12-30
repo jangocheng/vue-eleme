@@ -62,18 +62,14 @@ export default {
     },
     methods: {
         getData() {
-            this.$axios(
-                `/api/order/search_order/${localStorage.ele_login}`
-            ).then(res => {
-                // console.log(res.data);
-                if (res.data) this.orderlist = res.data.orderlist;
-            });
+            this.$api.searchOrderInfo(localStorage.ele_login)
+                .then(res => {
+                    // console.log(res.data);
+                    if (res.data) this.orderlist = res.data.orderlist;
+                });
         },
         deleteOrder(order) {
-            this.$axios
-                .delete(
-                    `/api/order/delete_order/${localStorage.ele_login}/${order._id}`
-                )
+            this.$api.deleteOrder(localStorage.ele_login, order._id)
                 .then(res => {
                     // console.log(res.data);
                     this.getData();

@@ -74,8 +74,8 @@ export default {
             }
         },
         getData() {
-            this.$axios(`/api/user/user_info/${localStorage.ele_login}`).then(
-                res => {
+            this.$api.getUserInfo(localStorage.ele_login)
+                .then(res => {
                     // console.log(res.data);
                     this.userInfo = res.data;
                     this.$store.dispatch('setUserInfo', res.data);

@@ -44,10 +44,7 @@ export default {
             });
         },
         handleDelete(address, index) {
-            this.$axios
-                .delete(
-                    `/api/user/address/${localStorage.ele_login}/${address._id}`
-                )
+            this.$api.deleteAddress(localStorage.ele_login, address._id)
                 .then(res => {
                     this.allAddress.splice(index, 1);
                 });

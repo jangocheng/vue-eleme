@@ -112,16 +112,16 @@ export default {
             });
         },
         getData() {
-            this.$axios(`/api/user/user_info/${localStorage.ele_login}`).then(
-                res => {
-                    // console.log(res.data);
-                    if (res.data.myAddress.length > 0) {
-                        this.haveAddress = true;
-                    } else {
-                        this.haveAddress = false;
+            this.$api.getUserInfo(localStorage.ele_login)
+                .then(res => {
+                        // console.log(res.data);
+                        if (res.data.myAddress.length > 0) {
+                            this.haveAddress = true;
+                        } else {
+                            this.haveAddress = false;
+                        }
                     }
-                }
-            );
+                );
         },
         handlePay() {
             if (!this.nowAddrInfo) {

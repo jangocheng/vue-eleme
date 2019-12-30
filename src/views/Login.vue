@@ -93,12 +93,7 @@ export default {
         toLogin() {
             // 登录
             this.errors = {};
-            this.$axios
-                .post('/api/login/sms_back', {
-                    mobile: this.phone,
-                    code: this.code,
-                    type: this.loginType
-                })
+            this.$api.handleLogin(this.phone, this.code, this.loginType)
                 .then(res => {
                     // console.log(res.data);
                     localStorage.setItem('ele_login', res.data.user._id);
@@ -116,12 +111,7 @@ export default {
             // 获取验证码
             if (this.phoneIsLawful()) {
                 this.validateBtn();
-                this.$axios
-                    .post('/api/login/sms_send', {
-                        mobile: this.phone,
-                        SMS_ID: process.env.VUE_APP_SMS_ID,
-                        SMS_KEY: process.env.VUE_APP_SMS_KEY
-                    })
+                this.$api.getVerificationCode(this.phone)
                     .then(res => {
                         // console.log(res);
                     });
