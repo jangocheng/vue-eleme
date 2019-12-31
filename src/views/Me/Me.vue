@@ -135,14 +135,14 @@ export default {
     align-items: center;
 }
 .head-img {
-    width: 0.6rem;
-    height: 0.6rem;
+    width: 16vw;
+    height: 16vw;
     margin-right: 4vw;
     border: 2px solid rgb(247, 227, 190);
     border-radius: 50%;
-    background-position: 0px 0px;
-    background-size: 0.6rem;
-    background-image: url("../../assets/2.png");
+    background-image: url("../../assets/user_head.png");
+    background-size: 16vw;
+    background-position: 0px -16vw;
 }
 /* 优惠信息 */
 .discounts {

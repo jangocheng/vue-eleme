@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="order-card-bottom">
-                <button class="cardbutton gray" @click="$router.push({ name: 'addComment', params: order})">
+                <button v-if="order.isSuccess && !order.isComment" class="cardbutton gray" @click="$router.push({ name: 'addComment', params: order})">
                     <span>评价</span>
                 </button>
                 <button class="cardbutton" @click="deleteOrder(order)">
@@ -67,7 +67,7 @@ export default {
         getData() {
             this.$api.searchOrderInfo(localStorage.ele_login)
                 .then(res => {
-                    // console.log(res.data);
+                    console.log(res.data);
                     if (res.data) this.orderlist = res.data.orderlist;
                 });
         },

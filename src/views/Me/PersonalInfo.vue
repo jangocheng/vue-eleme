@@ -97,8 +97,9 @@ export default {
     height: 16vw;
     margin: 2.667vw 7vw 2.667vw auto;
     border-radius: 50%;
+    background-image: url("../../assets/user_head.png");
     background-size: 16vw;
-    background-image: url("../../assets/0.png");
+    background-position: 0px -16vw;
 }
 .head i {
     font-size: 6.667vw;

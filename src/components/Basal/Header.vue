@@ -1,5 +1,5 @@
 <template>
-    <div class="header" :class="{bgcBule: isBlue}">
+    <div class="header" :class="{bgcBule: isBlue}" :style="{backgroundColor: bgcC}">
         <!-- 左侧返回 -->
         <div class="header-button is-left" v-show="isLeft">
             <i class="fa fa-chevron-left"></i>
@@ -18,6 +18,10 @@ export default {
         isLeft: {
             type: Boolean,
             default: false
+        },
+        bgcC: {
+            type: String,
+            default: '#fff'
         },
         back: {
             type: String,
@@ -52,10 +56,7 @@ export default {
 <style scoped>
 .header {
     align-items: center;
-    /* background-color: #009eef; */
-    background-color: #fff;
     box-sizing: border-box;
-    /* color: #fff; */
     color: #000;
     display: flex;
     font-size: 16px;
